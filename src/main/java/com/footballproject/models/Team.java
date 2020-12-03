@@ -1,6 +1,9 @@
 package com.footballproject.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "teams")
@@ -11,11 +14,11 @@ public class Team {
     @Column(name = "team_id")
     private int id;
 
-    //@Size(min = 2, max = 20, message = "Name should be between 2 & 20 symbols")
+    @Size(min = 2, max = 20, message = "Name should be between 2 & 20 symbols")
     @Column(name = "team_name")
     private String name;
 
-    //@Size(min = 2, max = 100, message = "Description should be between 2 & 100 symbols")
+    @Size(min = 2, max = 100, message = "Description should be between 2 & 100 symbols")
     @Column(name = "description")
     private String description;
 
@@ -25,7 +28,8 @@ public class Team {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private UserDetails owner;
+    @JsonIgnore
+    private User owner;
 
     public int getId() {
         return id;
@@ -59,11 +63,11 @@ public class Team {
         this.country = country;
     }
 
-    public UserDetails getOwner() {
+    public User getOwner() {
         return owner;
     }
 
-    public void setOwner(UserDetails owner) {
+    public void setOwner(User owner) {
         this.owner = owner;
     }
 }
